@@ -42,6 +42,14 @@ Written in Swift with AppKit only — no dependencies, no Xcode project, no Dock
   Quit
 ```
 
+## Install
+
+1. [Download System Monitor 1.0.dmg](https://github.com/tahirmanzoor120/system-monitor/releases/download/v1.0/System.Monitor.1.0.dmg) (all releases are on the [Releases page](https://github.com/tahirmanzoor120/system-monitor/releases)).
+2. Open the DMG and drag **System Monitor** into the **Applications** folder.
+3. Open it from Applications. The app is not notarised, so macOS may block the first launch: right-click the app, choose **Open**, then confirm. (Or allow it under System Settings → Privacy & Security.)
+
+The stats appear in the menu bar. There is no Dock icon.
+
 ## Requirements
 
 - macOS 13 or later (uses `SMAppService` for the login item)
