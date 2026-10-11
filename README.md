@@ -92,7 +92,9 @@ The login item points at the app's current location. If you move or rebuild the 
 ```
 main.swift   app entry point, menu, metric sampling, menu bar drawing
 SMC.swift    SMC reader for temperature and fan speed
+VERSION      current version, read by build.sh
 build.sh     builds and signs System Monitor.app
+make-dmg.sh  packages the app into a DMG (`./make-dmg.sh`, add `--rebuild` to rebuild first)
 assets/      AppIcon.icns (used by the build) and AppIcon.png (1024px preview)
 tools/       make_icon.swift: generates the app icon
 README.md    this file

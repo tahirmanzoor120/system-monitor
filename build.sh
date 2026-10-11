@@ -2,6 +2,7 @@
 set -e
 cd "$(dirname "$0")"
 NAME="System Monitor"
+VERSION=$(<VERSION)
 APP="$NAME.app"
 rm -rf "$APP"; mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 swiftc -O main.swift SMC.swift -o "$APP/Contents/MacOS/$NAME"
@@ -16,8 +17,8 @@ cat > "$APP/Contents/Info.plist" <<P
 <key>CFBundleDisplayName</key><string>$NAME</string>
 <key>CFBundleIconFile</key><string>AppIcon</string>
 <key>CFBundlePackageType</key><string>APPL</string>
-<key>CFBundleShortVersionString</key><string>1.0</string>
-<key>CFBundleVersion</key><string>1</string>
+<key>CFBundleShortVersionString</key><string>$VERSION</string>
+<key>CFBundleVersion</key><string>$VERSION</string>
 <key>LSMinimumSystemVersion</key><string>13.0</string>
 <key>LSUIElement</key><true/>
 </dict></plist>
