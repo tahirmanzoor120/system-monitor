@@ -1,4 +1,5 @@
-# SysMonitor
+# System Monitor
+<p align="center"><img src="assets/AppIcon.png" width="160" alt="System Monitor icon"></p>
 
 A tiny native macOS menu bar app that shows live system stats as compact **icon + number** groups, right in the top bar.
 
@@ -50,19 +51,19 @@ Written in Swift with AppKit only — no dependencies, no Xcode project, no Dock
 ## Build and run
 
 ```sh
-./build.sh          # compiles and creates SysMonitor.app next to the script
-open SysMonitor.app
+./build.sh          # compiles and creates `System Monitor.app` next to the script
+open "System Monitor.app"
 ```
 
-`build.sh` compiles `main.swift` and `SMC.swift` with `swiftc -O`, writes an `Info.plist` (with `LSUIElement` set so there is no Dock icon), and ad-hoc signs the bundle with `codesign --sign -`.
+`build.sh` compiles `main.swift` and `SMC.swift` with `swiftc -O`, copies in the app icon, writes an `Info.plist` (with `LSUIElement` set so there is no Dock icon), and ad-hoc signs the bundle with `codesign --sign -`.
 
 To rebuild after a change:
 
 ```sh
-pkill SysMonitor; ./build.sh && open SysMonitor.app
+pkill -x "System Monitor"; ./build.sh && open "System Monitor.app"
 ```
 
-To stop it, use **Quit** in the menu or run `pkill SysMonitor`.
+To stop it, use **Quit** in the menu or run `pkill -x "System Monitor"`.
 
 ## Starting at login
 
@@ -91,7 +92,9 @@ The login item points at the app's current location. If you move or rebuild the 
 ```
 main.swift   app entry point, menu, metric sampling, menu bar drawing
 SMC.swift    SMC reader for temperature and fan speed
-build.sh     builds and signs SysMonitor.app
+build.sh     builds and signs System Monitor.app
+assets/      AppIcon.icns (used by the build) and AppIcon.png (1024px preview)
+tools/       make_icon.swift: generates the app icon
 README.md    this file
 ```
 
@@ -101,6 +104,21 @@ How the code is organised:
 - `Sensors` wraps `SMC` for temperature and fan speed.
 - `AppDelegate` owns the status item and the menu. A 2-second timer calls `update()`, which samples every metric (even hidden ones, so CPU deltas stay accurate), builds a list of `Reading` values for the shown ones, and draws them.
 - `gauges(_:)` renders the readings into one `NSImage`, drawn with a drawing handler so it adapts to light and dark mode. Icons come from SF Symbols (`cpu`, `memorychip`, `internaldrive`, `thermometer.medium`, `fan`).
+
+## App icon
+
+The icon is a layered chip illustration drawn in code by `tools/make_icon.swift` (Core Graphics, no image editor needed). It follows Apple's macOS icon grid: a 1024 px canvas with an 824 px continuous-corner (squircle) body centred in it, leaving a transparent margin for the drop shadow.
+
+Layers, back to front: body shadow, blue gradient background with a soft glow and faint circuit traces, chip pins, the chip package (with its own shadow for depth), the silicon die, a glowing activity-pulse glyph, and a glossy top highlight with a thin inner edge.
+
+To regenerate it:
+
+```sh
+swiftc -O tools/make_icon.swift -o /tmp/make_icon
+/tmp/make_icon assets/AppIcon.icns     # also writes assets/AppIcon.png
+```
+
+The `.icns` contains the standard 16 to 512 pt sizes at 1x and 2x. Edit the colours and shapes in `draw(_:)` to restyle it.
 
 ## Customising
 
