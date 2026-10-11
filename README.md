@@ -140,3 +140,7 @@ The `.icns` contains the standard 16 to 512 pt sizes at 1x and 2x. Edit the colo
 - Not notarised or signed with a developer ID, so it is meant to be built locally.
 - Only the main disk (`/`) is monitored.
 - Temperature shows a single hottest-core value, not a per-core breakdown.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
