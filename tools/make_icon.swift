@@ -37,20 +37,20 @@ func draw(_ ctx: CGContext) {
 
     // Layer 0: drop shadow under the whole icon body
     ctx.saveGState()
-    ctx.setShadow(offset: CGSize(width: 0, height: -14), blur: 28, color: rgb(0, 0, 0, 0.35))
+    ctx.setShadow(offset: CGSize(width: 0, height: -14), blur: 28, color: rgb(0, 0, 0, 0.3))
     ctx.addPath(bodyPath); ctx.setFillColor(rgb(10, 20, 40)); ctx.fillPath()
     ctx.restoreGState()
 
     // Layer 1: background gradient, clipped to the body
     ctx.saveGState()
     ctx.addPath(bodyPath); ctx.clip()
-    gradient(ctx, [rgb(90, 170, 255), rgb(46, 112, 240), rgb(28, 58, 160)], from: CGPoint(x: 300, y: 924), to: CGPoint(x: 724, y: 100))
+    gradient(ctx, [rgb(255, 255, 255), rgb(244, 246, 250), rgb(218, 224, 234)], from: CGPoint(x: 300, y: 924), to: CGPoint(x: 724, y: 100))
     // soft glow behind the chip
     let glow = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(),
-                          colors: [rgb(150, 230, 255, 0.65), rgb(150, 230, 255, 0)] as CFArray, locations: nil)!
+                          colors: [rgb(255, 255, 255, 0.9), rgb(255, 255, 255, 0)] as CFArray, locations: nil)!
     ctx.drawRadialGradient(glow, startCenter: CGPoint(x: 512, y: 512), startRadius: 0, endCenter: CGPoint(x: 512, y: 512), endRadius: 400, options: [])
     // faint circuit traces
-    ctx.setStrokeColor(rgb(200, 230, 255, 0.16)); ctx.setLineWidth(6); ctx.setLineCap(.round)
+    ctx.setStrokeColor(rgb(120, 135, 165, 0.18)); ctx.setLineWidth(6); ctx.setLineCap(.round)
     for y in stride(from: 190, through: 830, by: 64) {
         ctx.move(to: CGPoint(x: 100, y: y)); ctx.addLine(to: CGPoint(x: 190, y: y))
         ctx.move(to: CGPoint(x: 834, y: y)); ctx.addLine(to: CGPoint(x: 924, y: y))
@@ -72,7 +72,7 @@ func draw(_ ctx: CGContext) {
         for p in pins {
             ctx.saveGState()
             ctx.addPath(rounded(p, 8)); ctx.clip()
-            gradient(ctx, [rgb(236, 240, 247), rgb(150, 162, 184)], from: CGPoint(x: p.minX, y: p.maxY), to: CGPoint(x: p.maxX, y: p.minY))
+            gradient(ctx, [rgb(200, 208, 222), rgb(120, 132, 156)], from: CGPoint(x: p.minX, y: p.maxY), to: CGPoint(x: p.maxX, y: p.minY))
             ctx.restoreGState()
         }
     }
@@ -84,7 +84,7 @@ func draw(_ ctx: CGContext) {
     ctx.restoreGState()
     ctx.saveGState()
     ctx.addPath(rounded(chip, 60)); ctx.clip()
-    gradient(ctx, [rgb(140, 156, 200), rgb(78, 94, 140), rgb(52, 64, 104)], from: CGPoint(x: chip.minX, y: chip.maxY), to: CGPoint(x: chip.maxX, y: chip.minY))
+    gradient(ctx, [rgb(96, 112, 156), rgb(52, 66, 108), rgb(34, 44, 76)], from: CGPoint(x: chip.minX, y: chip.maxY), to: CGPoint(x: chip.maxX, y: chip.minY))
     ctx.restoreGState()
     // package rim highlight
     ctx.addPath(rounded(chip.insetBy(dx: 2, dy: 2), 58)); ctx.setStrokeColor(rgb(200, 220, 255, 0.45)); ctx.setLineWidth(4); ctx.strokePath()
@@ -93,7 +93,7 @@ func draw(_ ctx: CGContext) {
     let die = chip.insetBy(dx: 52, dy: 52)
     ctx.saveGState()
     ctx.addPath(rounded(die, 34)); ctx.clip()
-    gradient(ctx, [rgb(26, 40, 82), rgb(16, 24, 56)], from: CGPoint(x: die.minX, y: die.maxY), to: CGPoint(x: die.maxX, y: die.minY))
+    gradient(ctx, [rgb(18, 28, 62), rgb(10, 16, 40)], from: CGPoint(x: die.minX, y: die.maxY), to: CGPoint(x: die.maxX, y: die.minY))
     ctx.restoreGState()
     ctx.addPath(rounded(die, 34)); ctx.setStrokeColor(rgb(110, 170, 255, 0.55)); ctx.setLineWidth(3); ctx.strokePath()
 
@@ -123,10 +123,10 @@ func draw(_ ctx: CGContext) {
     ctx.saveGState()
     ctx.addPath(bodyPath); ctx.clip()
     let gloss = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(),
-                           colors: [rgb(255, 255, 255, 0.32), rgb(255, 255, 255, 0)] as CFArray, locations: nil)!
+                           colors: [rgb(255, 255, 255, 0.5), rgb(255, 255, 255, 0)] as CFArray, locations: nil)!
     ctx.drawLinearGradient(gloss, start: CGPoint(x: 512, y: 924), end: CGPoint(x: 512, y: 600), options: [])
     ctx.restoreGState()
-    ctx.addPath(squircle(body.insetBy(dx: 1.5, dy: 1.5))); ctx.setStrokeColor(rgb(255, 255, 255, 0.18)); ctx.setLineWidth(3); ctx.strokePath()
+    ctx.addPath(squircle(body.insetBy(dx: 1.5, dy: 1.5))); ctx.setStrokeColor(rgb(150, 160, 185, 0.45)); ctx.setLineWidth(3); ctx.strokePath()
 }
 
 func render(pixels: Int) -> Data {
